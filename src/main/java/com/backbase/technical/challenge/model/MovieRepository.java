@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<Movie> findByTitle(String title);
-    @Transactional
     @Modifying
     @Query("delete from Movie m where m.boxOffice=:wrongBoxOffice")
     void deleteInvalidData(String wrongBoxOffice);
