@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ public class MovieService {
     final ConsumingRestApplication consumingRestApplication;
 
     @PostConstruct
+    @Transactional
     public void validate() {
         movieRepository.deleteInvalidData("N/A");
     }
@@ -39,7 +41,7 @@ public class MovieService {
         return movieRepository.findAll().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-
+    @Transactional
     public List<Movie> findTopTenMovies(MovieDto updatedMovies) {
 
         Movie updatedMovie = movieRepository.findByTitle(updatedMovies.getTitle().trim())
