@@ -24,6 +24,7 @@ public class MovieService {
     final ConsumingRestApplication consumingRestApplication;
 
     @PostConstruct
+    @Transactional
     public void validate() {
         movieRepository.deleteInvalidData("N/A");
     }
@@ -39,7 +40,7 @@ public class MovieService {
         return movieRepository.findAll().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-
+    @Transactional
     public List<Movie> findTopTenMovies(MovieDto updatedMovies) {
 
         Movie updatedMovie = movieRepository.findByTitle(updatedMovies.getTitle().trim())
